@@ -1,5 +1,8 @@
-from django.shortcuts import HttpResponse
+from django.shortcuts import render
+from django.views import View
 
 
-def index(request):
-    return HttpResponse('cowsay hi')
+class Index(View):
+
+    def get(self, request, *args, **kwargs):
+        return render(request, 'index.html')
