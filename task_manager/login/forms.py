@@ -1,11 +1,11 @@
 from django.forms import ModelForm
-from task_manager.users.models import Users
+from django.contrib.auth.models import User
 
 class LoginForm(ModelForm):
 
     class Meta:
 
-        model = Users
+        model = User
         fields = [
             'username', 'password'
         ]

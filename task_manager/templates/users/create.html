@@ -17,7 +17,8 @@
 
     </h1>
     
-<form method="post">
+<form method="post" action="{% url 'logout' %}">
+{% csrf_token %}
 <input type="hidden" name="csrfmiddlewaretoken" value="C10cxnTdIXbCU4QtEzvBl4ZqEGryGKl2HSYei3guvEaKXELPXPTRtAAMI8i90aLp">
 <div class="form-group"><label for="id_first_name">Имя</label><input type="text" name="first_name" maxlength="150" class="form-control" placeholder="Имя" title="" required id="id_first_name"></div>
 <div class="form-group"><label for="id_last_name">Фамилия</label><input type="text" name="last_name" maxlength="150" class="form-control" placeholder="Фамилия" title="" required id="id_last_name"></div>
