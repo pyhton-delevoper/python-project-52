@@ -9,9 +9,8 @@
     </h1>
     
 <p>Вы уверены, что хотите удалить {{ user.first_name }} {{ user.last_name }}?</p>
-<form method="post" action="{% url 'user_delete' %'}">
+<form method="post" action="{% url 'user_delete' user.id %'}">
 {% csrf_token %}
-<input type="hidden" name="csrfmiddlewaretoken" value="XufWIg7KaXBSQc7jrahpSYBLmxUk4RfyKT1OOQmncQ7893Rv3pUitpFrQgvP1ZRu">
 <input class="btn btn-danger" type="submit" value="Да, удалить">
 </form>
 

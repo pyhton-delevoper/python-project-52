@@ -19,7 +19,7 @@ from task_manager import views
 from task_manager.login.views import logout_view
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    #path('admin/', admin.site.urls),
     path('', views.Index.as_view(), name='index'),
     path('login/', include('task_manager.login.urls')),
     path('logout/', logout_view, name='logout'),

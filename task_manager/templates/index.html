@@ -2,14 +2,15 @@
 {% block content %}
   <div class="container wrapper flex-grow-1">
       
-  {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
+    {% if messages %}
+      {% for message in messages %}
+      <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="close">×</button>
+          {{ message }}
+      </div>
+      {% endfor %}
   {% endif %}
-
+  
 <h1 class="my-4"></h1>
 <h1 class="my-4"></h1>
 <div class="card">
