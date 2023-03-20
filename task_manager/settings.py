@@ -36,7 +36,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    #'django.contrib.admin',
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -101,8 +101,6 @@ if os.getenv('DATABASE_URL'):
         conn_health_checks=True,
     )
 
-
-AUTH_USER_MODEL = 'users.MyUser'
 
 
 # Password validation
