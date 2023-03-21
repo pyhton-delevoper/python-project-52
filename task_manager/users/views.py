@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.views import View
 from django.contrib import messages
 from django.views.generic.edit import UpdateView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy, reverse
 
 
@@ -35,39 +35,32 @@ class UserCreate(View):
         return redirect('login')
 
 
-class UserUpdate(LoginRequiredMixin, View):
+class UserUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = User
+    fields = ['first_name', 'last_name', 'username', 'password']
     login_url = reverse_lazy('login')
+    template_name = 'users/update.html'
 
-    def get(self, request, *args, **kwargs):
-        user = get_object_or_404(User, id=kwargs['id'])
-
-        if request.user.username != user.username:
-            messages.add_message(
-                request, messages.ERROR, extra_tags='alert-danger',
-                message='У вас нет прав для изменения этого пользователя.'
-            )
-            return redirect('users_list')
-
-        return render(request, 'users/update.html', {'user': user})
-    
-    def post(self, request, *args, **kwargs):
-        user = User.objects.get(id=kwargs['id'])
-        user.username = request.POST['username']
-        user.set_password(request.POST['password1'])
-        user.save()
-        messages.add_message(
-            request, messages.SUCCESS, extra_tags='alert-success',
-            message='Пользователь успешно изменён'
+    def form_valid(self, form):
+        user = form.save(commit=False)
+        user.set_password(form.cleaned_data['password1'])
+        messages.success(
+            self.request, 'Пользователь успешно изменён', 'alert-success'
         )
-        return redirect('users_list')
+    
+    def test_func(self):
+        user = get_object_or_404(self.model, id=self.kwargs['id'])
+        return self.request.user == user
     
     def handle_no_permission(self):
+        if not self.request.user.is_authenticated:
+            message = 'Вы не авторизованы! Пожалуйста, выполните вход.'
+        else:
+            message = 'У вас нет прав для изменения этого пользователя.'
         messages.error(
-            self.request,
-            'Вы не авторизованы! Пожалуйста, выполните вход.',
-            'alert-danger'
+            self.request, message, 'alert-danger'
         )
-        return super().handle_no_permission()
+        return redirect('users_list')
 
 
 class UserDelete(View):
