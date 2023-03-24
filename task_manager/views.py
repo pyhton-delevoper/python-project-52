@@ -1,22 +1,31 @@
 from django.shortcuts import render
 from django.contrib import messages
 from django.contrib.auth.views import LogoutView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 
 
 def index(request, *args, **kwargs):
-    message = messages.get_messages(request)
-    return render(
-        request, 'index.html', {'messages': message}
-    )
+    return render(request, 'index.html')
 
 
 class UserLogoutView(LogoutView):
     next_page = reverse_lazy('index')
 
     def dispatch(self, request):
-        messages.add_message(
-            request, messages.SUCCESS,
-            'Вы разлогинены', 'alert-info'
+        messages.success(
+            request, 'Вы разлогинены', 'alert-info'
         )
         return super().dispatch(request)
+    
+
+class MyLoginRequiredMixin(LoginRequiredMixin):
+    login_url = reverse_lazy('login')
+    
+    def handle_no_permission(self):
+        messages.error(
+            self.request,
+            'Вы не авторизованы! Пожалуйста, выполните вход.',
+            'alert-danger'
+        )
+        return super().handle_no_permission()
