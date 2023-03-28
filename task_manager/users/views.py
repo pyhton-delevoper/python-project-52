@@ -1,13 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from task_manager.views import MyLoginRequiredMixin
 from django.contrib.auth.models import User
-from django.urls import reverse_lazy
 from django.views import View
 from django.contrib import messages
 from .models import UserCreateForm
 
 
-class ShowUsers(View):
+class UsersList(View):
 
     def get(self, request, *args, **kwargs):
         users = User.objects.all()
@@ -42,10 +41,9 @@ class UserCreate(View):
 
 
 class UserUpdate(MyLoginRequiredMixin, View):
-    login_url = reverse_lazy('login')
 
     def get(self, request, *args, **kwargs):
-        user = get_object_or_404(User, id=kwargs['pk'])
+        user = User.objects.get(id=kwargs['pk'])
 
         if request.user.username != user.username:
             messages.error(
@@ -54,13 +52,16 @@ class UserUpdate(MyLoginRequiredMixin, View):
                 'alert-danger'
             )
             return redirect('users_list')
-
+        
+        form = UserCreateForm(instance=user)
         return render(
-            request, 'users/update.html', {'user': user}
+            request, 'users/update.html', {'form': form, 'id': user.id}
         )
     
     def post(self, request, *args, **kwargs):
-        form = UserCreateForm(request.POST)
+        user = User.objects.get(id=kwargs['pk'])
+        form = UserCreateForm(request.POST, instance=user)
+
         if form.is_valid():
             user = form.save(commit=False)
             user.set_password(form.data['password'])
@@ -71,6 +72,7 @@ class UserUpdate(MyLoginRequiredMixin, View):
                 'alert-success'
             )
             return redirect('users_list')
+
         return render(
             request, 'users/update.html', {'form': form}
         )

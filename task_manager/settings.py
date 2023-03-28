@@ -43,10 +43,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap4',
+    'django_extensions',
     'task_manager',
     'task_manager.users',
     'task_manager.login',
-    'django_extensions',
+    'task_manager.statuses',
+    'task_manager.tasks',
 ]
 
 MIDDLEWARE = [
@@ -102,7 +104,6 @@ if os.getenv('DATABASE_URL'):
     )
 
 
-
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -113,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator', 
         'OPTIONS': {
-            'min_length': 3
+            'min_length': 3,
         }
     },
     {

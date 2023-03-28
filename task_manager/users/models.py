@@ -7,5 +7,5 @@ class UserCreateForm(ModelForm):
         model = User
         fields = [
             'first_name', 'last_name',
-            'username', 'password'
+            'username', 'password1', 'password2'
         ]

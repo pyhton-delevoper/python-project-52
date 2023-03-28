@@ -1,12 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.contrib import messages
-from django.urls import reverse_lazy
 from .models import Status, StatusCreateForm
 from task_manager.views import MyLoginRequiredMixin
 
 
-class ShowStatuses(MyLoginRequiredMixin, View):
+class StatusesList(MyLoginRequiredMixin, View):
 
     def get(request, **kwargs):
         statuses = Status.objects.all()
@@ -15,8 +14,7 @@ class ShowStatuses(MyLoginRequiredMixin, View):
         )
     
 
-class CreateStatus(MyLoginRequiredMixin, View):
-    message = 'Статус успешно создан'
+class StatusCreate(MyLoginRequiredMixin, View):
 
     def get(self, request, **kwargs):
         form = StatusCreateForm()
@@ -29,7 +27,9 @@ class CreateStatus(MyLoginRequiredMixin, View):
         if form.is_valid():
             form.save()
             messages.success(
-                request, self.message, 'alert-success'
+                request,
+                'Статус успешно создан',
+                'alert-success'
             )
             return redirect('statuses_list')
         return render(
@@ -37,8 +37,30 @@ class CreateStatus(MyLoginRequiredMixin, View):
         )
 
 
-class UpdateStatus(CreateStatus):
-    message = 'Статус успешно изменён'
+class StatusUpdate(StatusCreate):
+    
+    def get(self, request, **kwargs):
+        status = Status.objects.get(id=kwargs['pk'])
+        form = StatusCreateForm(instance=status)
+        return render(
+            request, 'statuses/create.html', {'form': form}
+        )
+
+    def post(self, request, **kwargs):
+        status = Status.objects.get(kwargs['pk'])
+        form = StatusCreateForm(request.POST, instance=status)
+        if form.is_valid():
+            form.save()
+            messages.success(
+                request,
+                'Статус успешно изменён',
+                'alert-success'
+            )
+            return redirect('statuses_list')
+        return render(
+            request, 'statuses/create.html',
+            {'form': form, 'id': status.id}
+        )
 
 
 class StatusDelete(MyLoginRequiredMixin, View):
