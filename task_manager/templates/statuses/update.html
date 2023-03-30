@@ -11,7 +11,7 @@
 
     </h1>
     
-    <form method="post" action="{% url 'status_update' id %}">
+    <form method="post" action="{% url 'status_update' status.id %}">
         {% csrf_token %}
         {% bootstrap_form form %}
             {% buttons %}

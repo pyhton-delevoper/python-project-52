@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from task_manager.views import MyLoginRequiredMixin
-from django.contrib.auth.models import User
 from django.views import View
+from django.contrib.auth.models import User
+from django.db.models import ProtectedError
 from django.contrib import messages
 from .models import UserCreateForm
+from task_manager.views import MyLoginRequiredMixin
 
 
 class UsersList(View):
@@ -64,7 +65,7 @@ class UserUpdate(MyLoginRequiredMixin, View):
 
         if form.is_valid():
             user = form.save(commit=False)
-            user.set_password(form.data['password'])
+            user.set_password(form.data['password1'])
             user.save()
             messages.success(
                 request,
@@ -81,7 +82,15 @@ class UserUpdate(MyLoginRequiredMixin, View):
 class UserDelete(MyLoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
-        user = get_object_or_404(User, id=kwargs['pk'])
+        try:
+            user = get_object_or_404(User, id=kwargs['pk'])
+        except ProtectedError:
+            messages.error(
+                request,
+                '''Невозможно удалить пользователя, 
+                   потому что он используется''',
+                'alert-danger'
+            )
 
         if request.user.username != user.username:
             messages.error(

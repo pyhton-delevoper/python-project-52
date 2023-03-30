@@ -5,15 +5,15 @@
 
     <h1 class="my-4">
       
-Регистрация
+Создать метку
 
     </h1>
     
-<form method="post" action="{% url 'user_create' %}">
+<form method="post" action="{% url 'label_create' %}">
 {% csrf_token %}
 {% bootstrap_form form %}
     {% buttons %}
-      <button type="submit" class="btn btn-primary">Сохранить</button>
+      <button type="submit" class="btn btn-primary">Создать</button>
     {% endbuttons %}
 </form>
 

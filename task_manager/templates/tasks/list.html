@@ -41,10 +41,10 @@
                 {% for task in tasks %}
                     <tr>
                         <td>{{ task.id }}</td>
-                        <td><a href="{% url 'task_show' task.id %}">{{ task.name }}</a></td>
+                        <td><a href="{% url 'task_view' task.id %}">{{ task.name }}</a></td>
                         <td>{{ task.status }}</td>
                         <td>{{ task.author }}</td>
-                        <td>{{ task.solver }}</td>
+                        <td>{{ task.executor }}</td>
                         <td>{{ task.date_created|date:"d.m.Y H:i" }}</td>
                         <td>
                             <a href="{% url 'task_update' task.id %}">{% trans 'Изменить' %}</a>

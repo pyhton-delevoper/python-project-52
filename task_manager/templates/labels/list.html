@@ -1,0 +1,46 @@
+{% extend "base.html" %}
+{% block content %}
+<div class="container wrapper flex-grow-1">
+      
+{% if messages %}
+    {% for message in messages %}
+    <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="close">×</button>
+        {{ message }}
+    </div>
+    {% endfor %}
+{% endif %}
+
+    <h1 class="my-4">
+      
+Метки
+
+    </h1>
+    
+<a class="nav-link" href="/labels/create/">Создать метку</a>
+<table class="table table-striped">
+<thead>
+  <tr>
+    <th>ID</th>
+    <th>Имя</th>
+    <th>Дата создания</th>
+    <th></th>
+  </tr>
+</thead>
+<tbody>
+  {% for label in labels %}
+    <tr>
+      <td>{{ label.id }}</td>
+      <td>{{ label.name }}</td>
+      <td>{{ label.created_at }}</td>
+      <td>
+        <a href="{% url 'label_update' label.id %}">Изменить</a>
+        <br>
+        <a href="{% url 'label_delete' label.id %}">Удалить</a>
+      </td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+</div>
+{% endblock %}

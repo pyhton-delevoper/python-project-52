@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.contrib import messages
+from django.db.models import ProtectedError
 from .models import Status, StatusCreateForm
 from task_manager.views import MyLoginRequiredMixin
 
@@ -66,13 +67,25 @@ class StatusUpdate(StatusCreate):
 class StatusDelete(MyLoginRequiredMixin, View):
 
     def get(self, request, **kwargs):
-        return render(request, 'statuses/delete.html')
+        status = get_object_or_404(Status, kwargs['pk'])
+        return render(
+            request, 'statuses/delete.html', {'status': status}
+        )
 
     def post(self, request, **kwargs):
-        status = get_object_or_404(Status, kwargs['pk'])
-        #active_statuses = Task.objects.status_set
-        status.delete()
+        try:
+            get_object_or_404(Status, kwargs['pk']).delete()
+        except ProtectedError:
+            messages.error(
+                request,
+                '''Невозможно удалить статус, 
+                   потому что он используется''',
+                'alert-danger'
+            )
+            return redirect('statuses_list')
         messages.success(
-            request, 'Статус успешно удалёнэ', 'alert-success'
+            request,
+            'Статус успешно удалён',
+            'alert-success'
         )
         return redirect('statuses_list')
