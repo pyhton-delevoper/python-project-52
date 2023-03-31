@@ -1,6 +1,5 @@
 from django.db import models
 from django.forms import ModelForm
-from task_manager.tasks.models import Task
 
 
 class Label(models.Model):

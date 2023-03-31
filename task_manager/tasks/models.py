@@ -3,6 +3,7 @@ from django.forms import ModelForm
 from django.contrib.auth.models import User
 from task_manager.statuses.models import Status
 from task_manager.labels.models import Label
+import django_filters
 
 
 statuses = Status.objects.all()
@@ -34,7 +35,8 @@ class Task(models.Model):
     labels = models.ManyToManyField(
         Label,
         blank=True,
-        choices=labels)
+        choices=labels
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -46,3 +48,9 @@ class TaskCreateForm(ModelForm):
         model = Task
         fields = '__all__'
         exclude = ['created_at', 'author']
+
+
+class TaskFilterForm(django_filters.FilterSet):
+    class Meta:
+        model = Task
+        fields = ['status', 'executor', 'labels']

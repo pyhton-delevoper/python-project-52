@@ -25,7 +25,9 @@ class TaskCreate(MyLoginRequiredMixin, View):
     def post(self, request, **kwargs):
         form = TaskCreateForm(request.POST)
         if form.is_valid():
-            form.save()
+            task = form.save(commit=False)
+            task.author = request.user.username
+            task.save()
             messages.success(
                 request,
                 'Задача успешно создана',
