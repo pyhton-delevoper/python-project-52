@@ -8,7 +8,7 @@ from task_manager.views import MyLoginRequiredMixin
 
 class StatusesList(MyLoginRequiredMixin, View):
 
-    def get(request, **kwargs):
+    def get(self, request, *args, **kwargs):
         statuses = Status.objects.all()
         return render(
             request, 'statuses/list.html', {'statuses': statuses}
@@ -17,13 +17,13 @@ class StatusesList(MyLoginRequiredMixin, View):
 
 class StatusCreate(MyLoginRequiredMixin, View):
 
-    def get(self, request, **kwargs):
+    def get(self, request, *args, **kwargs):
         form = StatusCreateForm()
         return render(
             request, 'statuses/create.html', {'form': form}
         )
     
-    def post(self, request, **kwargs):
+    def post(self, request, *args, **kwargs):
         form = StatusCreateForm(request.POST)
         if form.is_valid():
             form.save()
@@ -40,14 +40,14 @@ class StatusCreate(MyLoginRequiredMixin, View):
 
 class StatusUpdate(StatusCreate):
     
-    def get(self, request, **kwargs):
+    def get(self, request, *args, **kwargs):
         status = Status.objects.get(id=kwargs['pk'])
         form = StatusCreateForm(instance=status)
         return render(
             request, 'statuses/create.html', {'form': form}
         )
 
-    def post(self, request, **kwargs):
+    def post(self, request, *args, **kwargs):
         status = Status.objects.get(kwargs['pk'])
         form = StatusCreateForm(request.POST, instance=status)
         if form.is_valid():
@@ -66,13 +66,13 @@ class StatusUpdate(StatusCreate):
 
 class StatusDelete(MyLoginRequiredMixin, View):
 
-    def get(self, request, **kwargs):
+    def get(self, request, *args, **kwargs):
         status = get_object_or_404(Status, kwargs['pk'])
         return render(
             request, 'statuses/delete.html', {'status': status}
         )
 
-    def post(self, request, **kwargs):
+    def post(self, request, *args, **kwargs):
         try:
             get_object_or_404(Status, kwargs['pk']).delete()
         except ProtectedError:

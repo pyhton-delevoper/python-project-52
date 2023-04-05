@@ -19,11 +19,11 @@
         Вход
         
     </h1>
-    <form method="post" action="{% url 'user_create' %}">
+    <form method="post" action="{% url 'login' %}">
       {% csrf_token %}
       {% bootstrap_form form %}
           {% buttons %}
-            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <button type="submit" class="btn btn-primary">Войти</button>
           {% endbuttons %}
       </form>
   </div>

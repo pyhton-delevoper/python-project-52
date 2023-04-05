@@ -3,39 +3,42 @@ from django.forms import ModelForm
 from django.contrib.auth.models import User
 from task_manager.statuses.models import Status
 from task_manager.labels.models import Label
-import django_filters
-
-
-statuses = Status.objects.all()
-executors = User.objects.all()
-labels = User.objects.all()
 
 
 class Task(models.Model):
-    name = models.CharField(max_length=150)
-    description = models.TextField(blank=True)
+    name = models.CharField(
+        max_length=150,
+        verbose_name='Имя'
+    )
+    description = models.TextField(
+        blank=True,
+        verbose_name='Описание'
+    )
     author = models.ForeignKey(
         User,
+        null=True,
         on_delete=models.PROTECT,
         related_name='author'
     )
     status = models.ForeignKey(
         Status,
+        null=True,
         on_delete=models.PROTECT,
         blank=True,
-        choices=statuses,
+        verbose_name='Статус'
     )
     executor = models.ForeignKey(
         User,
+        null=True,
         on_delete=models.PROTECT,
         blank=True,
-        choices=executors,
-        related_name='executor'
+        related_name='executor',
+        verbose_name='Исполнитель'
     )
     labels = models.ManyToManyField(
         Label,
         blank=True,
-        choices=labels
+        verbose_name='Метки'
     )
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -48,9 +51,3 @@ class TaskCreateForm(ModelForm):
         model = Task
         fields = '__all__'
         exclude = ['created_at', 'author']
-
-
-class TaskFilterForm(django_filters.FilterSet):
-    class Meta:
-        model = Task
-        fields = ['status', 'executor', 'labels']

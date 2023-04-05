@@ -28,7 +28,7 @@ class UserCreate(View):
         form = UserCreateForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.set_password(form.data['password'])
+            user.set_password(form.data['password1'])
             user.save()
             messages.success(
                 request,

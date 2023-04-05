@@ -9,7 +9,7 @@ from task_manager.views import MyLoginRequiredMixin
 
 class LabelsList(MyLoginRequiredMixin, View):
 
-    def get(self, request, **kwargs):
+    def get(self, request, *args, **kwargs):
         labels = Label.objects.all()
         return render(
             request, 'labels/list.html', {'labels': labels}
@@ -18,13 +18,13 @@ class LabelsList(MyLoginRequiredMixin, View):
 
 class LabelCreate(MyLoginRequiredMixin, View):
 
-    def get(self, request, **kwargs):
+    def get(self, request, *args, **kwargs):
         form = LabelCreateForm()
         return render(
             request, 'labels/create.html', {'form': form}
         )
     
-    def post(self, request, **kwargs):
+    def post(self, request, *args, **kwargs):
         form = LabelCreateForm(request.POST)
         if form.is_valid():
             form.save()
@@ -33,7 +33,7 @@ class LabelCreate(MyLoginRequiredMixin, View):
                 'Метка успешно создана',
                 'alert-success'
             )
-            return redirect('users_list')
+            return redirect('labels_list')
         return render(
             request, 'labels/create.html', {'form': form}
         )
@@ -41,7 +41,7 @@ class LabelCreate(MyLoginRequiredMixin, View):
 
 class LabelUpdate(MyLoginRequiredMixin, View):
 
-    def get(self, request, **kwargs):
+    def get(self, request, *args, **kwargs):
         label = get_object_or_404(Label, id=kwargs['pk'])
         form = LabelCreateForm(instance=label)
         return render(
@@ -49,7 +49,7 @@ class LabelUpdate(MyLoginRequiredMixin, View):
             {'form': form, 'label': label}
         )
     
-    def post(self, request, **kwargs):
+    def post(self, request, *args, **kwargs):
         label = get_object_or_404(Label, id=kwargs['pk'])
         form = LabelCreateForm(request.POST, instance=label)
         if form.is_valid():
@@ -59,7 +59,7 @@ class LabelUpdate(MyLoginRequiredMixin, View):
                 'Метка успешно изменена',
                 'alert-success'
             )
-            return redirect('users_list')
+            return redirect('labels_list')
         return render(
             request, 'labels/update.html',
             {'form': form, 'label': label}
@@ -68,13 +68,13 @@ class LabelUpdate(MyLoginRequiredMixin, View):
 
 class LabelDelete(MyLoginRequiredMixin, View):
 
-    def get(self, request, **kwargs):
+    def get(self, request, *args, **kwargs):
         label = get_object_or_404(Label, id=kwargs['pk'])
         return render(
             request, 'labels/delete.html', {'label': label}
         )
     
-    def post(self, request, **kwargs):
+    def post(self, request, *args, **kwargs):
         try:
             get_object_or_404(Label, kwargs['pk']).delete()
         except ProtectedError:
