@@ -13,7 +13,7 @@ class StatusesList(MyLoginRequiredMixin, View):
         return render(
             request, 'statuses/list.html', {'statuses': statuses}
         )
-    
+
 
 class StatusCreate(MyLoginRequiredMixin, View):
 
@@ -22,7 +22,7 @@ class StatusCreate(MyLoginRequiredMixin, View):
         return render(
             request, 'statuses/create.html', {'form': form}
         )
-    
+
     def post(self, request, *args, **kwargs):
         form = StatusCreateForm(request.POST)
         if form.is_valid():
@@ -39,7 +39,7 @@ class StatusCreate(MyLoginRequiredMixin, View):
 
 
 class StatusUpdate(StatusCreate):
-    
+
     def get(self, request, *args, **kwargs):
         status = Status.objects.get(id=kwargs['pk'])
         form = StatusCreateForm(instance=status)
@@ -78,8 +78,8 @@ class StatusDelete(MyLoginRequiredMixin, View):
         except ProtectedError:
             messages.error(
                 request,
-                '''Невозможно удалить статус, 
-                   потому что он используется''',
+                '''Невозможно удалить статус,
+                потому что он используется''',
                 'alert-danger'
             )
             return redirect('statuses_list')

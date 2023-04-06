@@ -38,7 +38,7 @@ class TaskCreate(MyLoginRequiredMixin, View):
         return render(
             request, 'tasks/create.html', {'form': form}
         )
-    
+
 
 class TaskView(MyLoginRequiredMixin, View):
 
@@ -47,7 +47,7 @@ class TaskView(MyLoginRequiredMixin, View):
         return render(
             request, 'tasks/view.html', {'task': task}
         )
-        
+
 
 class TaskUpdate(MyLoginRequiredMixin, View):
 
@@ -90,7 +90,7 @@ class TaskDelete(MyLoginRequiredMixin, View):
         return render(
             request, 'tasks/delete.html', {'task': task}
         )
-    
+
     def post(self, request, *args, **kwargs):
         get_object_or_404(Task, id=kwargs['pk']).delete()
         messages.success(

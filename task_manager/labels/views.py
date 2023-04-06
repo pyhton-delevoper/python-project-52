@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
-from django.contrib.auth.models import User
 from django.db.models import ProtectedError
 from django.contrib import messages
 from task_manager.labels.models import Label, LabelCreateForm
@@ -14,7 +13,7 @@ class LabelsList(MyLoginRequiredMixin, View):
         return render(
             request, 'labels/list.html', {'labels': labels}
         )
-    
+
 
 class LabelCreate(MyLoginRequiredMixin, View):
 
@@ -23,7 +22,7 @@ class LabelCreate(MyLoginRequiredMixin, View):
         return render(
             request, 'labels/create.html', {'form': form}
         )
-    
+
     def post(self, request, *args, **kwargs):
         form = LabelCreateForm(request.POST)
         if form.is_valid():
@@ -48,7 +47,7 @@ class LabelUpdate(MyLoginRequiredMixin, View):
             request, 'labels/update.html',
             {'form': form, 'label': label}
         )
-    
+
     def post(self, request, *args, **kwargs):
         label = get_object_or_404(Label, id=kwargs['pk'])
         form = LabelCreateForm(request.POST, instance=label)
@@ -73,15 +72,17 @@ class LabelDelete(MyLoginRequiredMixin, View):
         return render(
             request, 'labels/delete.html', {'label': label}
         )
-    
+
     def post(self, request, *args, **kwargs):
         try:
             get_object_or_404(Label, kwargs['pk']).delete()
         except ProtectedError:
             messages.error(
                 request,
-                '''Невозможно удалить метку, 
-                   потому что она используется''',
+                '''
+                Невозможно удалить метку,
+                потому что она используется
+                ''',
                 'alert-danger'
             )
             return redirect('labels_list')

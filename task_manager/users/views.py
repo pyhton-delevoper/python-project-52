@@ -23,7 +23,7 @@ class UserCreate(View):
         return render(
             request, 'users/create.html', {'form': form}
         )
-    
+
     def post(self, request, *args, **kwargs):
         form = UserCreateForm(request.POST)
         if form.is_valid():
@@ -53,12 +53,12 @@ class UserUpdate(MyLoginRequiredMixin, View):
                 'alert-danger'
             )
             return redirect('users_list')
-        
+
         form = UserCreateForm(instance=user)
         return render(
             request, 'users/update.html', {'form': form, 'id': user.id}
         )
-    
+
     def post(self, request, *args, **kwargs):
         user = User.objects.get(id=kwargs['pk'])
         form = UserCreateForm(request.POST, instance=user)
@@ -87,8 +87,8 @@ class UserDelete(MyLoginRequiredMixin, View):
         except ProtectedError:
             messages.error(
                 request,
-                '''Невозможно удалить пользователя, 
-                   потому что он используется''',
+                '''Невозможно удалить пользователя,
+                потому что он используется''',
                 'alert-danger'
             )
 
@@ -103,7 +103,7 @@ class UserDelete(MyLoginRequiredMixin, View):
         return render(
             request, 'users/delete.html', {'user': user}
         )
-    
+
     def post(self, request, *args, **kwargs):
         User.objects.get(id=kwargs['pk']).delete()
         messages.success(

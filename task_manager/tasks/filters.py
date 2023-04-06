@@ -11,11 +11,11 @@ class TaskFilterForm(FilterSet):
     )
     own_tasks = BooleanFilter(
         method='filter_own',
-        widget = CheckboxInput,
+        widget=CheckboxInput,
         label='Только свои задачи'
     )
 
-    def filter_own(self, qs, name, value):   
+    def filter_own(self, qs, name, value):
         if value:
             user = self.request.user
             return qs.filter(author=user)
@@ -24,4 +24,3 @@ class TaskFilterForm(FilterSet):
     class Meta:
         model = Task
         fields = ['status', 'executor', 'labels']
-    

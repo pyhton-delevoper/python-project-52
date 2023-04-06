@@ -17,11 +17,11 @@ class UserLogoutView(LogoutView):
             request, 'Вы разлогинены', 'alert-info'
         )
         return super().dispatch(request)
-    
+
 
 class MyLoginRequiredMixin(LoginRequiredMixin):
     login_url = reverse_lazy('login')
-    
+
     def handle_no_permission(self):
         messages.error(
             self.request,
