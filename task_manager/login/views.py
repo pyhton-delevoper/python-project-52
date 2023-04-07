@@ -7,18 +7,21 @@ class UserLoginView(LoginView):
     template_name = 'login/login.html'
 
     def form_valid(self, form):
-        messages.add_message(
-            self.request, messages.SUCCESS,
-            'Вы залогинены', 'alert-success'
+        messages.success(
+            self.request,
+            'Вы залогинены',
+            'alert-success'
         )
         return super().form_valid(form)
 
     def form_invalid(self, form):
 
-        messages.add_message(
-            self.request, messages.ERROR,
-            '''Введите правильные имя пользователя и пароль.
-            Оба поля могут быть чувствительны к регистру.''',
+        messages.error(
+            self.request,
+            '''
+            Введите правильные имя пользователя и пароль.
+            Оба поля могут быть чувствительны к регистру.
+            ''',
             'alert-danger'
         )
         return super().form_invalid(form)
