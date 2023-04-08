@@ -11,7 +11,7 @@ compile-messages:
 PORT ?= 8000
 deploy:
 		poetry run python3 manage.py migrate
-		poetry run gunicorn -w 5 --bind 0.0.0.0:$(PORT) task_manager.wsgi:app
+		poetry run gunicorn -w 5 --bind 0.0.0.0:$(PORT) task_manager.wsgi
 
 lint:
 		poetry run flake8 task_manager

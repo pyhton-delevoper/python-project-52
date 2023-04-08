@@ -1,8 +1,8 @@
 {% extends "base.html" %}
-
 {% load bootstrap4 %}
 {% block content %}
 <div class="container wrapper flex-grow-1">
+
 {% if messages %}
     {% for message in messages %}
     <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
@@ -11,6 +11,7 @@
     </div>
     {% endfor %}
 {% endif %}
+
     <h1 class="my-4">Задачи</h1>
 
     <a class="nav-link" href="{% url 'task_create' %}">Создать задачу</a>
@@ -45,9 +46,9 @@
                     <tr>
                         <td>{{ task.id }}</td>
                         <td><a href="{% url 'task_view' task.id %}">{{ task.name }}</a></td>
-                        <td>{{ task.status }}</td>
+                        <td>{{ task.status | default:''}}</td>
                         <td>{{ task.author }}</td>
-                        <td>{{ task.executor }}</td>
+                        <td>{{ task.executor | default:''}}</td>
                         <td>{{ task.created_at }}</td>
                         <td>
                             <a href="{% url 'task_update' task.id %}">Изменить</a>

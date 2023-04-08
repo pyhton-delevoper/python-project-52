@@ -14,17 +14,5 @@ class UserLoginView(LoginView):
         )
         return super().form_valid(form)
 
-    def form_invalid(self, form):
-
-        messages.error(
-            self.request,
-            '''
-            Введите правильные имя пользователя и пароль.
-            Оба поля могут быть чувствительны к регистру.
-            ''',
-            'alert-danger'
-        )
-        return super().form_invalid(form)
-
     def get_success_url(self):
         return reverse_lazy('index')

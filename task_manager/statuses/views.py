@@ -67,14 +67,14 @@ class StatusUpdate(StatusCreate):
 class StatusDelete(MyLoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
-        status = get_object_or_404(Status, kwargs['pk'])
+        status = get_object_or_404(Status, id=kwargs['pk'])
         return render(
             request, 'statuses/delete.html', {'status': status}
         )
 
     def post(self, request, *args, **kwargs):
         try:
-            get_object_or_404(Status, kwargs['pk']).delete()
+            get_object_or_404(Status, id=kwargs['pk']).delete()
         except ProtectedError:
             messages.error(
                 request,
