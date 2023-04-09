@@ -40,9 +40,11 @@ class MyLoginRequiredMixin(LoginRequiredMixin):
     login_url = reverse_lazy('login')
 
     def dispatch(self, request, *args, **kwargs):
-        messages.error(
-            self.request,
-            'Вы не авторизованы! Пожалуйста, выполните вход.',
-            'alert-danger'
-        )
+        if not request.user.is_authenticated:
+            messages.error(
+                self.request,
+                'Вы не авторизованы! Пожалуйста, выполните вход.',
+                'alert-danger'
+            )
+            return redirect('login')
         return super().dispatch(request, *args, **kwargs)
