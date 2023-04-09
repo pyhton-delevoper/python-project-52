@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -22,10 +22,10 @@ class UserLogoutView(LogoutView):
 class MyLoginRequiredMixin(LoginRequiredMixin):
     login_url = reverse_lazy('login')
 
-    def handle_no_permission(self):
+    def dispatch(self, request, *args, **kwargs):
         messages.error(
             self.request,
             'Вы не авторизованы! Пожалуйста, выполните вход.',
             'alert-danger'
         )
-        return super().handle_no_permission()
+        return super().dispatch(request, *args, **kwargs)
