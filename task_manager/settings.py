@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'django_filters',
     'task_manager',
     'task_manager.users',
-    'task_manager.login',
     'task_manager.statuses',
     'task_manager.labels',
     'task_manager.tasks'
