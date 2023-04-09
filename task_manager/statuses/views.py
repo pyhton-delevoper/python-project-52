@@ -38,17 +38,18 @@ class StatusCreate(MyLoginRequiredMixin, View):
         )
 
 
-class StatusUpdate(StatusCreate):
+class StatusUpdate(MyLoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
-        status = Status.objects.get(id=kwargs['pk'])
+        status = get_object_or_404(Status, id=kwargs['pk'])
         form = StatusCreateForm(instance=status)
         return render(
-            request, 'statuses/create.html', {'form': form}
+            request, 'statuses/update.html',
+            {'form': form, 'status': status}
         )
 
     def post(self, request, *args, **kwargs):
-        status = Status.objects.get(kwargs['pk'])
+        status = get_object_or_404(Status, id=kwargs['pk'])
         form = StatusCreateForm(request.POST, instance=status)
         if form.is_valid():
             form.save()
@@ -59,8 +60,8 @@ class StatusUpdate(StatusCreate):
             )
             return redirect('statuses_list')
         return render(
-            request, 'statuses/create.html',
-            {'form': form, 'id': status.id}
+            request, 'statuses/update.html',
+            {'form': form, 'status': status}
         )
 
 
