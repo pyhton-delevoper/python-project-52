@@ -75,12 +75,12 @@ class LabelDelete(MyLoginRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         try:
-            get_object_or_404(Label, kwargs['pk']).delete()
+            get_object_or_404(Label, id=kwargs['pk']).delete()
         except ProtectedError:
             messages.error(
                 request,
                 '''
-                Невозможно удалить метку,   
+                Невозможно удалить метку,
                 потому что она используется
                 ''',
                 'alert-danger'

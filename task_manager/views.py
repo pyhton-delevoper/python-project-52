@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.forms import AuthenticationForm
@@ -21,7 +21,7 @@ class UserLoginView(LoginView):
             'alert-success'
         )
         return super().form_valid(form)
-    
+
     def get_success_url(self):
         return reverse_lazy('index')
 
