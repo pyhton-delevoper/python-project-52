@@ -80,7 +80,7 @@ class LabelDelete(MyLoginRequiredMixin, View):
             messages.error(
                 request,
                 '''
-                Невозможно удалить метку,
+                Невозможно удалить метку,   
                 потому что она используется
                 ''',
                 'alert-danger'
