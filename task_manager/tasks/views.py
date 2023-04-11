@@ -24,6 +24,7 @@ class TaskCreate(MyLoginRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         form = TaskCreateForm(request.POST)
+
         if form.is_valid():
             task = form.save(commit=False)
             task.author = request.user
@@ -35,6 +36,7 @@ class TaskCreate(MyLoginRequiredMixin, View):
                 'alert-success'
             )
             return redirect('tasks_list')
+
         return render(
             request, 'tasks/create.html', {'form': form}
         )
@@ -62,6 +64,7 @@ class TaskUpdate(MyLoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         task = get_object_or_404(Task, id=kwargs['pk'])
         form = TaskCreateForm(request.POST, instance=task)
+
         if form.is_valid():
             form.save()
             messages.success(
@@ -70,6 +73,7 @@ class TaskUpdate(MyLoginRequiredMixin, View):
                 'alert-success'
             )
             return redirect('tasks_list')
+
         return render(
             request, 'tasks/create.html',
             {'form': form, 'id': task.id}
