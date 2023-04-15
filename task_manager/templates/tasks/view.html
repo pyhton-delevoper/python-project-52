@@ -24,7 +24,7 @@
     </div>
     <div class="row p-1">
       <div class="col">Исполнитель</div>
-      <div class="col">{{ task.executor.get_full_name |default:'' }}</div>
+      <div class="col">{{ task.executor |default:'' }}</div>
     </div>
     <div class="row p-1">
       <div class="col">Статус</div>
@@ -39,7 +39,7 @@
         <h6>Метки:</h6>
         <ul>
           {% for label in task.labels.all %}
-            <li>{{ label.name }}</li>
+            <li>{{ label }}</li>
           {% endfor %}
         </ul>
       </div>

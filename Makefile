@@ -16,9 +16,8 @@ deploy:
 lint:
 		poetry run flake8 task_manager
 
-restart-db:
-		dropdb hexlet-code
-		createdb hexlet-code
+reset-db:
+		poetry run python manage.py reset_db
 
 start-db:
 		sudo service postgresql start
