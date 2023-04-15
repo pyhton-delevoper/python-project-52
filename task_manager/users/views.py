@@ -3,7 +3,8 @@ from django.views import View
 from django.db.models import ProtectedError
 from django.contrib import messages
 from task_manager.views import MyLoginRequiredMixin
-from .models import User, UserCreateForm
+from .models import User
+from .forms import UserCreateForm
 
 
 class UsersList(View):
