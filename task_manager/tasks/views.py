@@ -58,7 +58,7 @@ class TaskUpdate(MyLoginRequiredMixin, View):
         form = TaskCreateForm(instance=task)
         return render(
             request, 'tasks/update.html',
-            {'form': form, 'id': task.id}
+            {'form': form, 'task': task}
         )
 
     def post(self, request, *args, **kwargs):
