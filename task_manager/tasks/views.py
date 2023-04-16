@@ -98,8 +98,8 @@ class TaskDelete(MyLoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         get_object_or_404(Task, id=kwargs['pk']).delete()
         messages.success(
-                request,
-                'Задача успешно удалена',
-                'alert-success'
-            )
+            request,
+            'Задача успешно удалена',
+            'alert-success'
+        )
         return redirect('tasks_list')
