@@ -1,5 +1,4 @@
 from django.contrib.auth.models import AbstractUser as U
-from django.conf import settings
 
 
 class User(U):
