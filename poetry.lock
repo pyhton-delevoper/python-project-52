@@ -87,7 +87,7 @@ Django = ">=3.2"
 name = "django-extensions"
 version = "3.2.1"
 description = "Extensions for Django"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 files = [
@@ -354,4 +354,4 @@ brotli = ["Brotli"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "9c9017b9a39891cedfe8c4d12fcb614b9630b0f2198e35de60adedd18650b764"
+content-hash = "7c03c6c5ddb6b1b774bd05c74c5fc1526bc33922d0087e1e8a53c9f0ab288b05"
