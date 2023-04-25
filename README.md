@@ -1,11 +1,10 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/pyhton-delevoper/python-project-52/workflows/hexlet-check/badge.svg)](https://github.com/pyhton-delevoper/python-project-52/actions)
-[![Actions Status](https://github.com/pyhton-delevoper/python-project-52/workflows/lint/badge.svg)](https://github.com/pyhton-delevoper/python-project-52/actions)
-
-[Task-manager](task-manager-production-1fb5.up.railway.app)
 
 ### Описание:
 Менеджер задач - это четвертый и завершающий учебный проект, позволяющий авторизованным пользователям создавать задачи, а также метки и статусы для них.
+
+[Открыть проект](python-project-52-production-dcfc.up.railway.app)
 
 ### Установить проект:
 ```bash
