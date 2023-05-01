@@ -32,7 +32,8 @@ DEBUG = os.getenv('DEBUG')
 
 ALLOWED_HOSTS = ['webserver', '*']
 
-CSRF_TRUSTED_ORIGINS = ['*']
+# CSRF_TRUSTED_ORIGINS = ['*']
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
 
