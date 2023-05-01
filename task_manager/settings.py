@@ -32,6 +32,7 @@ DEBUG = os.getenv('DEBUG')
 
 ALLOWED_HOSTS = ['webserver', '*']
 
+CSRF_TRUSTED_ORIGINS = ['*']
 
 # Application definition
 
