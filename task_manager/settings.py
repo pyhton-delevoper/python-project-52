@@ -32,8 +32,7 @@ DEBUG = os.getenv('DEBUG')
 
 ALLOWED_HOSTS = ['webserver', '*']
 
-# CSRF_TRUSTED_ORIGINS = ['*']
-CORS_ORIGIN_ALLOW_ALL = True
+CSRF_TRUSTED_ORIGINS = ['https://python-project-52-production-dcfc.up.railway.app']
 
 # Application definition
 
